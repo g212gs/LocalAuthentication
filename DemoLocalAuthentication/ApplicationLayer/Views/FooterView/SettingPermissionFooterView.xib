@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SettingPermissionFooterView" customModule="DemoLocalAuthentication" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="83"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When enabled, you'll need to user Touch ID to unlock the Application. You can still answer calls if the Application is locked." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ttt-WY-Fde">
+                    <rect key="frame" x="10" y="10" width="355" height="53"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Ttt-WY-Fde" secondAttribute="bottom" constant="20" id="QVq-MC-fmW"/>
+                <constraint firstItem="Ttt-WY-Fde" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="g0X-ZO-z2l"/>
+                <constraint firstItem="Ttt-WY-Fde" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="q3Q-Wb-55V"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Ttt-WY-Fde" secondAttribute="trailing" constant="10" id="q88-95-gRR"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="lblPermission" destination="Ttt-WY-Fde" id="kLt-fh-S3f"/>
+            </connections>
+            <point key="canvasLocation" x="138.40000000000001" y="-125.4872563718141"/>
+        </view>
+    </objects>
+</document>
