@@ -17,7 +17,7 @@ Face ID and Touch ID authentication using LocalAuthentication framework - Swift 
 - [x] Sample UI for setting screen
 - [x] Authentication can on/off
 - [x] UI for authentication require time
-- [ ] partly handle authentication require time functionality
+- [x] authentication time required functionality
 
 
 ## Requirements
