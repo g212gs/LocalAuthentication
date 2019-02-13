@@ -39,6 +39,8 @@ Gaurang Lathiya  – gaurang.lathiya8@gmail.com
 </a>
 <a href="www.linkedin.com/in/gaurang-lathiya-91b60540">
 <img src="https://cloud.githubusercontent.com/assets/1567433/6521256/20247bc2-c379-11e4-8e9e-417123debb8c.png" height="44" hspace="2"/>
+<a href="https://stackoverflow.com/users/1298362/g212gs?tab=profile">
+<img src="https://i.imgur.com/8Px7JnN.png" height="44" hspace="2"/>
 </a>
 
 
