@@ -8,51 +8,13 @@
 
 import UIKit
 
-public enum AuthTime: Int {
-    case immediately
-    case oneMinute
-    case fiveMinute
-    
-    // MARK:  Helper methods
-    static let count: Int = {
-        var max: Int = 0
-        while let _ = AuthTime(rawValue: max) { max += 1 }
-        return max
-    }()
-    
-    var string: String {
-        switch self {
-        case .immediately:
-            return "Immediately"
-        case .oneMinute:
-            return "After 1 minute"
-        case .fiveMinute:
-            return "After 5 minutes"
-        }
-    }
-    
-    // touchIDAuthenticationAllowableReuseDuration::
-    ///             The maximum supported interval is 5 minutes and setting the value beyond 5 minutes does not increase
-    ///             the accepted interval.
-    
-    var timeInterval: TimeInterval {
-        switch self {
-        case .immediately:
-            return 0
-        case .oneMinute:
-            return TimeInterval(exactly: 1 * 60) ?? 1 * 60
-        case .fiveMinute:
-            return TimeInterval(exactly: 1 * 60) ?? 5 * 60
-        }
-    }
-}
-
 class SettingScreen: UITableViewController {
     
     let footerView: SettingPermissionFooterView = SettingPermissionFooterView.fromNib()
     var isLocalAuthenticationEnable: Bool = UserDefaults.standard.bool(forKey: Constants.kUD_Authentication)
     var selectedAuthTime: AuthTime = AuthTime(rawValue: UserDefaults.standard.integer(forKey: Constants.kUD_Auth_Time)) ?? .immediately
 
+    // MARK: - ViewController life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,7 +34,7 @@ class SettingScreen: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = (Utility.isFaceIDSupported() == true) ? Constants.kFaceId : Constants.kTouchId
+        self.title = (AccessControl.isFaceIDSupported() == true) ? Constants.kFaceId : Constants.kTouchId
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,12 +42,27 @@ class SettingScreen: UITableViewController {
         self.title = ""
     }
 
-    // MARK: - Table view data source
+    // MARK: - Switch action
+    @objc func changeStatus(_ sender: UISwitch) {
+        self.isLocalAuthenticationEnable = sender.isOn
+        
+        // save this entry in user default
+        UserDefaults.standard.set(sender.isOn, forKey: Constants.kUD_Authentication)
+        UserDefaults.standard.synchronize()
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+}
 
+// MARK: - UITableViewDataSource
+extension SettingScreen {
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return (self.isLocalAuthenticationEnable == true) ? 2: 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -96,7 +73,7 @@ class SettingScreen: UITableViewController {
             return 0
         }
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
@@ -117,11 +94,13 @@ class SettingScreen: UITableViewController {
         default:
             break
         }
-        
         return UITableViewCell()
     }
+}
+
+// MARK: - UITableViewDelegate
+extension SettingScreen {
     
-    // MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -147,17 +126,20 @@ class SettingScreen: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
         case 1:
-            self.selectedAuthTime =  AuthTime(rawValue: indexPath.row) ?? .immediately
-            // save this entry in user default
-            UserDefaults.standard.set(self.selectedAuthTime.rawValue, forKey: Constants.kUD_Auth_Time)
-            UserDefaults.standard.synchronize()
-            
-            // Set authentication time for next interval
-            AccessControl.shared.context.touchIDAuthenticationAllowableReuseDuration = self.selectedAuthTime.timeInterval
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadSections(IndexSet(integersIn: 1...1)
-                    , with: UITableView.RowAnimation.none)
+            let newAutTime: AuthTime = AuthTime(rawValue: indexPath.row) ?? .immediately
+            if self.selectedAuthTime != newAutTime {
+                self.selectedAuthTime = newAutTime
+                
+                // save this entry in user default
+                UserDefaults.standard.set(self.selectedAuthTime.rawValue, forKey: Constants.kUD_Auth_Time)
+                UserDefaults.standard.set(Date(), forKey: Constants.kUD_Auth_LastDateTime)
+                UserDefaults.standard.synchronize()
+                
+                // Update tableview
+                DispatchQueue.main.async {
+                    self.tableView.reloadSections(IndexSet(integersIn: 1...1)
+                        , with: UITableView.RowAnimation.none)
+                }
             }
         default:
             break
@@ -176,18 +158,4 @@ class SettingScreen: UITableViewController {
         }
         return UIView()
     }
-    
-    // MARK: - Switch action
-    @objc func changeStatus(_ sender: UISwitch) {
-        self.isLocalAuthenticationEnable = sender.isOn
-        
-        // save this entry in user default
-        UserDefaults.standard.set(sender.isOn, forKey: Constants.kUD_Authentication)
-        UserDefaults.standard.synchronize()
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-
 }

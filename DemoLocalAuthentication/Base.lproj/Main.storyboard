@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,23 +18,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DdA-2B-hXW">
-                                <rect key="frame" x="20" y="323.5" width="335" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DdA-2B-hXW">
+                                <rect key="frame" x="20" y="546.5" width="335" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wait" translatesAutoresizingMaskIntoConstraints="NO" id="PoG-Gb-S9N">
+                                <rect key="frame" x="75" y="221" width="225" height="225"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="PoG-Gb-S9N" secondAttribute="height" multiplier="1:1" id="zTC-A2-HVj"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="PoG-Gb-S9N" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="26h-UB-0Ai"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="DdA-2B-hXW" secondAttribute="bottom" constant="100" id="8bk-ZH-7t9"/>
+                            <constraint firstItem="PoG-Gb-S9N" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.6" id="DEg-cG-suJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DdA-2B-hXW" secondAttribute="trailing" constant="20" id="Hbr-t8-61L"/>
-                            <constraint firstItem="DdA-2B-hXW" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Nvx-w8-eEy"/>
+                            <constraint firstItem="PoG-Gb-S9N" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="S1g-qI-SxG"/>
                             <constraint firstItem="DdA-2B-hXW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Zc9-dQ-r1S"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="LTs-GV-BaU"/>
                     <connections>
+                        <outlet property="imgViewResult" destination="PoG-Gb-S9N" id="Yyd-ZN-2Qz"/>
                         <outlet property="lblResults" destination="DdA-2B-hXW" id="mjr-NR-h3m"/>
                     </connections>
                 </viewController>
@@ -128,4 +139,7 @@
             <point key="canvasLocation" x="120.8" y="-564.46776611694156"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="wait" width="170" height="170"/>
+    </resources>
 </document>

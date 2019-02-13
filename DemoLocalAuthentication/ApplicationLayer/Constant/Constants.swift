@@ -24,28 +24,29 @@ class Constants: NSObject {
     static let kTouchId                 =   "Touch ID"
     static let kFaceId                  =   "Face ID"
     
-    static let kNoAuthenticationResult  =   "Please turn on authentication in order to check the result."
+    static let kAuthenticationDisabled  =   "Please turn on authentication in order to check the result."
     
     //User Defaults
     static let kUD_Authentication       =   "authentication"
     static let kUD_Auth_Time            =   "auth_time"
+    static let kUD_Auth_LastDateTime    =   "auth_last_datetime"
     
     // App Required instructions
     static func getLocalizedReasonString() -> String {
-        let dynamicStr = (Utility.isFaceIDSupported() == true) ? Constants.kFaceId : Constants.kTouchId
+        let dynamicStr = (AccessControl.isFaceIDSupported() == true) ? Constants.kFaceId : Constants.kTouchId
         return dynamicStr + " is required to use \(Constants.kApplicationName)."
     }
     
     static func getFooterInstruction() -> String {
-        let dynamicStr = (Utility.isFaceIDSupported() == true) ? Constants.kFaceId : Constants.kTouchId
+        let dynamicStr = (AccessControl.isFaceIDSupported() == true) ? Constants.kFaceId : Constants.kTouchId
         return "When enabled, you'll need to user \(dynamicStr) to unlock \(Constants.kApplicationName). You can still answer calls if \(Constants.kApplicationName) is locked."
     }
     
     static func getCellTitle() -> String {
-        return "Require " + ((Utility.isFaceIDSupported() == true) ? Constants.kFaceId : Constants.kTouchId)
+        return "Require " + ((AccessControl.isFaceIDSupported() == true) ? Constants.kFaceId : Constants.kTouchId)
     }
     
     // Errors
-    static let kErrorOldDevice          =   "Ooops!!.. Your device is not supported to authenticate via Face ID or Touch ID."
+    static let kErrorOldDevice          =   "Ooops!!.. Your device does not support to authenticate via Face ID or Touch ID."
     
 }

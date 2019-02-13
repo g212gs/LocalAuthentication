@@ -5,9 +5,11 @@ Face ID and Touch ID authentication using LocalAuthentication framework - Swift 
 [![License][license-image]][license-url]
 
 <p align="center">
-  <img src="https://i.imgur.com/P3sAZiF.png" alt="example screenshot 1" width="200" />
-  <img src="https://i.imgur.com/yjKQkI7.png" alt="example screenshot 2" width="200" />
-  <img src="https://i.imgur.com/JcHO4RO.png" alt="example screenshot 3" width="200" />
+  <img src="https://i.imgur.com/snCU1AE.png" alt="Initial screen" width="120" />
+  <img src="https://i.imgur.com/F0RxvCC.png" alt="Setting screen" width="120" />
+  <img src="https://i.imgur.com/0tc95d2.png" alt="Authentication permission" width="120" />
+  <img src="https://i.imgur.com/YDPZuYD.png" alt="Authentication successfull" width="120" />
+  <img src="https://i.imgur.com/CgklP1W.png" alt="Authentication failure" width="120" />
 </p>
 
 # Features
@@ -22,6 +24,7 @@ Face ID and Touch ID authentication using LocalAuthentication framework - Swift 
 
 - iOS 10.0+ (Touch ID and Face ID working with iOS 11+ only)
 - Xcode 10.0+
+- Swift 4.2+
 
 
 ## Contacts

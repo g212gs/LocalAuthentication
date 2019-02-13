@@ -16,6 +16,7 @@ class SettingPermissionCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        switchPermission.transform = CGAffineTransform(scaleX: 0.80, y: 0.80)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

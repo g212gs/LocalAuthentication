@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		452B4E2622142183001BA468 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452B4E2522142183001BA468 /* Enums.swift */; };
 		45B2A5632212A7F800CC582A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2A5622212A7F800CC582A /* AppDelegate.swift */; };
 		45B2A5652212A7F800CC582A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B2A5642212A7F800CC582A /* ViewController.swift */; };
 		45B2A5682212A7F800CC582A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45B2A5662212A7F800CC582A /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		452B4E2522142183001BA468 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		45B2A55F2212A7F800CC582A /* DemoLocalAuthentication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoLocalAuthentication.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45B2A5622212A7F800CC582A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45B2A5642212A7F800CC582A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				45B2A5822212CF3B00CC582A /* Constants.swift */,
+				452B4E2522142183001BA468 /* Enums.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			files = (
 				45B2A5882212D1CC00CC582A /* Utility.swift in Sources */,
 				45B2A5752212A83500CC582A /* SettingScreen.swift in Sources */,
+				452B4E2622142183001BA468 /* Enums.swift in Sources */,
 				45B2A57D2212CAE100CC582A /* SettingPermissionFooterView.swift in Sources */,
 				45B2A58A2212EBF300CC582A /* Extensions.swift in Sources */,
 				45B2A5772212B0FA00CC582A /* SettingPermissionCell.swift in Sources */,

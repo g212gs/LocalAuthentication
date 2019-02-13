@@ -7,25 +7,27 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class ViewController: UIViewController {
 
     @IBOutlet weak var lblResults: UILabel!
+    @IBOutlet weak var imgViewResult: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.lblResults.text = ""
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setNavigationBar()
+        self.resetUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.setResults()
+        self.handleAuthentication()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,7 +50,7 @@ class ViewController: UIViewController {
     
     @objc func goToSettings(_ sender: Any) {
         
-        if Utility.isAuthenticationSupported() {
+        if AccessControl.isAuthenticationSupported() {
             if let settingScreen: SettingScreen = self.storyboard?.instantiateViewController(withIdentifier: String(describing: SettingScreen.self)) as? SettingScreen {
                 self.navigationController?.pushViewController(settingScreen, animated: true)
             }
@@ -57,34 +59,89 @@ class ViewController: UIViewController {
         }
     }
     
-    func setResults() {
-        
-        if Utility.isAuthenticationSupported() {
-            
-            if UserDefaults.standard.bool(forKey: Constants.kUD_Authentication) {
-                
-                AccessControl.shared.evalute { (success, evaluateError) in
-                    var message: String = ""
-                    if success {
-                        message = "Awesome!!... User authenticated successfully"
-                    } else {
-                        var errorStr = "Sorry!!... failed not authenticate"
-                        if let err = evaluateError?.localizedDescription {
-                            errorStr = err
-                        }
-                        message = errorStr
-                    }
-                    DispatchQueue.main.async {
-                        self.lblResults.text = message
-                    }
-                }
-            } else {
-                self.lblResults.text = Constants.kNoAuthenticationResult
-            }
-        } else {
-            self.lblResults.text = Constants.kErrorOldDevice
+    func resetUI() {
+        DispatchQueue.main.async {
+            self.setUI(withImage: nil, message: "")
         }
     }
     
+    func setUI(withImage image: UIImage?, message: String) {
+        self.imgViewResult.image = image
+        self.lblResults.text = message
+    }
+    
+    func handleAuthentication() {
+        
+        let authState: AuthenticationState = self.isAuthenticationRequired()
+        switch authState {
+        case .logOut:
+            self.authenticateUser()
+        default:
+            DispatchQueue.main.async {
+                self.setUI(withImage: authState.image, message: authState.message)
+            }
+        }
+    }
+    
+    // MARK: - Helper Methods
+    func isAuthenticationRequired() -> AuthenticationState {
+        
+        if AccessControl.isAuthenticationSupported() {
+            
+            if UserDefaults.standard.bool(forKey: Constants.kUD_Authentication) {
+                // App is set up properly
+                let selectedAuthTime: AuthTime = AuthTime(rawValue: UserDefaults.standard.integer(forKey: Constants.kUD_Auth_Time)) ?? .immediately
+                switch selectedAuthTime {
+                case .immediately:
+                    return AuthenticationState.logOut
+                default:
+                    if let lastAuthTime = UserDefaults.standard.object(forKey: Constants.kUD_Auth_LastDateTime) as? Date {
+                        if self.getTimeDifference(fromDate: lastAuthTime) > selectedAuthTime.timeInterval {
+                            return AuthenticationState.logOut
+                        } else {
+                            return AuthenticationState.loggedIn
+                        }
+                    } else {
+                        return AuthenticationState.loggedIn
+                    }
+                }
+            } else {
+                return AuthenticationState.notEnrolled
+            }
+        } else {
+            return AuthenticationState.notSupported
+        }
+    }
+    
+    func getTimeDifference(fromDate date: Date) -> Int {
+        let cal = Calendar.current
+        let currentDateTime = Date()
+        let components = cal.dateComponents([.minute], from: date, to: currentDateTime)
+        return components.minute ?? 0
+    }
+    
+    // MARK: - Main Function
+    func authenticateUser() {
+        
+        AccessControl.shared.evalute { (success, evaluateError) in
+            if success {
+                DispatchQueue.main.async {
+                    self.setUI(withImage: AuthenticationState.loggedIn.image, message: AuthenticationState.loggedIn.message)
+                }
+            } else {
+                var errorStr: String?
+                if let error = evaluateError {
+                    if error.code == LAError.userCancel || error.code == LAError.systemCancel {
+                        errorStr = "Time to log out from App."
+                    } else {
+                        errorStr = AccessControl.shared.evaluateAuthenticationPolicyMessageForLA(errorCode: error._code)
+                    }
+                }
+                DispatchQueue.main.async {
+                    self.setUI(withImage: UIImage.init(named: "angry"), message: errorStr ?? "Sorry!!... failed not authenticate")
+                }
+            }
+        }
+    }
 }
 
