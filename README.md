@@ -6,7 +6,7 @@ Face ID and Touch ID authentication using LocalAuthentication framework - Swift 
 
 <p align="center">
   <img src="https://i.imgur.com/snCU1AE.png" alt="Initial screen" width="120" />
-  <img src="https://i.imgur.com/F0RxvCC.png" alt="Setting screen" width="120" />
+  <img src="https://i.imgur.com/DMKr1lR.png" alt="Setting screen" width="120" />
   <img src="https://i.imgur.com/0tc95d2.png" alt="Authentication permission" width="120" />
   <img src="https://i.imgur.com/YDPZuYD.png" alt="Authentication successfull" width="120" />
   <img src="https://i.imgur.com/CgklP1W.png" alt="Authentication failure" width="120" />
